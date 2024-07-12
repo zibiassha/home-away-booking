@@ -4,8 +4,11 @@ import { SignInButton } from "@clerk/nextjs";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useFormStatus } from "react-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { LuTrash2, LuPenSquare } from "react-icons/lu";
 
 type btnSize = "default" | "lg" | "sm";
+
+type actionType = "edit" | "delete";
 
 type SubmitButtonProps = {
   className?: string;
@@ -70,6 +73,33 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
       ) : (
         <FaRegHeart />
       )}
+    </Button>
+  );
+};
+
+export const IconButton = ({ actionType }: { actionType: actionType }) => {
+  const { pending } = useFormStatus();
+
+  const renderIcon = () => {
+    switch (actionType) {
+      case "edit":
+        return <LuPenSquare />;
+      case "delete":
+        return <LuTrash2 />;
+      default:
+        const never: never = actionType;
+        throw new Error(`Invalid action type: ${never}`);
+    }
+  };
+
+  return (
+    <Button
+      type="submit"
+      size="icon"
+      variant="link"
+      className="p-2 cursor-pointer"
+    >
+      {pending ? <ReloadIcon className=" animate-spin" /> : renderIcon()}
     </Button>
   );
 };

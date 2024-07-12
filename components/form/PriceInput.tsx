@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 
 type FormInputProps = {
   label?: string;
-  defaultValue?: string;
+  defaultValue?: number;
   placeholder?: string;
 };
 function PriceInput({ defaultValue }: FormInputProps) {
